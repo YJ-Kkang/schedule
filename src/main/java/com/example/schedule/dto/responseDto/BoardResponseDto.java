@@ -1,10 +1,11 @@
-package com.example.schedule.dto;
+package com.example.schedule.dto.responseDto;
 
 import com.example.schedule.entity.Board;
 import lombok.Getter;
 
 @Getter
 public class BoardResponseDto {
+
     private final Long id;
 
     private final String title;

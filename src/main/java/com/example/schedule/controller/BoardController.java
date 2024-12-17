@@ -1,8 +1,8 @@
 package com.example.schedule.controller;
 
-import com.example.schedule.dto.BoardResponseDto;
-import com.example.schedule.dto.BoardWithAgeResponseDto;
-import com.example.schedule.dto.CreateBoardRequestDto;
+import com.example.schedule.dto.responseDto.BoardResponseDto;
+import com.example.schedule.dto.responseDto.BoardWithIdResponseDto;
+import com.example.schedule.dto.requestDto.CreateBoardRequestDto;
 import com.example.schedule.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,15 +18,16 @@ public class BoardController {
 
     private final BoardService boardService;
 
+
     // 게시글 생성
     @PostMapping
     public ResponseEntity<BoardResponseDto> save(@RequestBody CreateBoardRequestDto requestDto) {
 
         BoardResponseDto boardResponseDto =
                 boardService.save(
+                        requestDto.getUsername(),
                         requestDto.getTitle(),
-                        requestDto.getContents(),
-                        requestDto.getUsername()
+                        requestDto.getContents()
                 );
 
         return new ResponseEntity<>(boardResponseDto, HttpStatus.CREATED);
@@ -43,9 +44,9 @@ public class BoardController {
 
     // 특정 게시글 조회
     @GetMapping("/{id}")
-    public ResponseEntity<BoardWithAgeResponseDto> findById(@PathVariable Long id) {
+    public ResponseEntity<BoardWithIdResponseDto> findById(@PathVariable Long id) {
 
-        BoardWithAgeResponseDto boardWithAgeResponseDto = boardService.findById(id);
+        BoardWithIdResponseDto boardWithAgeResponseDto = boardService.findById(id);
 
         return new ResponseEntity<>(boardWithAgeResponseDto, HttpStatus.OK);
     }

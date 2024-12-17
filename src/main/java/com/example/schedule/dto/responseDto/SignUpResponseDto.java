@@ -1,4 +1,4 @@
-package com.example.schedule.dto;
+package com.example.schedule.dto.responseDto;
 
 import lombok.Getter;
 
@@ -9,11 +9,8 @@ public class SignUpResponseDto {
 
     private final String username;
 
-    private final Integer age;
-
-    public SignUpResponseDto(Long id, String username, Integer age) {
+    public SignUpResponseDto(Long id, String username) {
         this.id = id;
         this.username = username;
-        this.age = age;
     }
 }

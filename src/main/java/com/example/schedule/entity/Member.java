@@ -13,26 +13,28 @@ public class Member extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String username;
+    
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String password;
-
-    private Integer age;
 
     // 기본 생성자
     public Member() {
     }
 
     // 회원 정보 구성
-    public Member(String username, String password, Integer age) {
+    public Member(String username, String email, String password) {
         this.username = username;
+        this.email = email;
         this.password = password;
-        this.age = age;
     }
 
-    // 비밀번호 수정
-    public void updatePassword(String password) {
-        this.password = password;
+    // 회원 정보 수정
+    public void updateMember(String username, String email) {
+        this.username = username;
+        this.email = email;
     }
 
 }

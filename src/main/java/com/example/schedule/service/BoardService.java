@@ -1,7 +1,7 @@
 package com.example.schedule.service;
 
-import com.example.schedule.dto.BoardResponseDto;
-import com.example.schedule.dto.BoardWithAgeResponseDto;
+import com.example.schedule.dto.responseDto.BoardResponseDto;
+import com.example.schedule.dto.responseDto.BoardWithIdResponseDto;
 import com.example.schedule.entity.Board;
 import com.example.schedule.entity.Member;
 import com.example.schedule.repository.BoardRepository;
@@ -18,9 +18,10 @@ public class BoardService {
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
 
+    // 게시글 생성
     public BoardResponseDto save(String title, String contents, String username) {
 
-        Member findMember = memberRepository.findMemberByUsernameOrElseThrow(username);
+        Member findMember = memberRepository.findByUsernameOrElseThrow(username);
 
         Board board = new Board(title, contents);
         board.setMember(findMember);
@@ -39,11 +40,11 @@ public class BoardService {
     }
 
     // 특정 게시글 조회
-    public BoardWithAgeResponseDto findById(Long id) {
+    public BoardWithIdResponseDto findById(Long id) {
         Board findBoard = boardRepository.findByIdOrElseThrow(id);
         Member writer = findBoard.getMember();
 
-        return new BoardWithAgeResponseDto(findBoard.getTitle(), findBoard.getContents(), writer.getAge());
+        return new BoardWithIdResponseDto(findBoard.getTitle(), findBoard.getContents());
     }
 
     // 특정 게시글 삭제 기능

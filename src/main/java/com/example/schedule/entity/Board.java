@@ -2,6 +2,7 @@ package com.example.schedule.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Entity
@@ -18,6 +19,7 @@ public class Board extends BaseEntity {
     private String contents;
 
     // 1명의 회원은 여러 개의 게시글 작성 가능 ( N 대 1 단방향 관계 )
+    @Setter
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
@@ -28,10 +30,6 @@ public class Board extends BaseEntity {
     public Board(String title, String contents) {
         this.title = title;
         this.contents = contents;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.schedule.dto;
+package com.example.schedule.dto.responseDto;
 
 import lombok.Getter;
 
@@ -7,11 +7,9 @@ public class MemberResponseDto {
 
     // 특정 회원 조회
     private final String username;
-    private final Integer age;
 
-    public MemberResponseDto(String username, Integer age) {
+    public MemberResponseDto(String username) {
         this.username = username;
-        this.age = age;
     }
 
 

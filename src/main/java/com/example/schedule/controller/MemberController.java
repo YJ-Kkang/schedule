@@ -1,9 +1,9 @@
 package com.example.schedule.controller;
 
-import com.example.schedule.dto.MemberResponseDto;
-import com.example.schedule.dto.SignUpRequestDto;
-import com.example.schedule.dto.SignUpResponseDto;
-import com.example.schedule.dto.UpdatePasswordRequestDto;
+import com.example.schedule.dto.responseDto.MemberResponseDto;
+import com.example.schedule.dto.requestDto.SignUpRequestDto;
+import com.example.schedule.dto.responseDto.SignUpResponseDto;
+import com.example.schedule.dto.requestDto.UpdateMemberRequestDto;
 import com.example.schedule.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,8 +24,8 @@ public class MemberController {
         SignUpResponseDto signUpResponseDto =
                 memberService.signUp(
                         requestDto.getUsername(),
-                        requestDto.getPassword(),
-                        requestDto.getAge()
+                        requestDto.getEmail(),
+                        requestDto.getPassword()
                 );
 
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
@@ -40,18 +40,23 @@ public class MemberController {
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
 
-    /*
-    비밀번호 수정 기능
+    /* 회원 정보 수정
+    비밀번호 확인 후 회원 정보 수정 기능
     일부 수정이기에 PatchMapping 사용
      */
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updatePassword(
+    public ResponseEntity<String> updateMember(
             @PathVariable Long id,
-            @RequestBody UpdatePasswordRequestDto requestDto
+            @RequestBody UpdateMemberRequestDto requestDto
     ) {
-        memberService.updatePassword(id, requestDto.getOldPassword(), requestDto.getNewPassword());
+        memberService.updateMember(
+                id, requestDto.getPassword(),
+                requestDto.getUsername(), requestDto.getEmail()
+        );
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Your account information has been updated successfully.", HttpStatus.OK);
     }
+
+
 
 }

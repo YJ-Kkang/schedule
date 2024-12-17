@@ -1,7 +1,7 @@
 package com.example.schedule.service;
 
-import com.example.schedule.dto.MemberResponseDto;
-import com.example.schedule.dto.SignUpResponseDto;
+import com.example.schedule.dto.responseDto.MemberResponseDto;
+import com.example.schedule.dto.responseDto.SignUpResponseDto;
 import com.example.schedule.entity.Member;
 import com.example.schedule.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +19,13 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     // 회원 생성
-    public SignUpResponseDto signUp(String username, String password, Integer age) {
+    public SignUpResponseDto signUp(String username, String email, String password) {
 
-        Member member = new Member(username, password, age);
+        Member member = new Member(username, email, password);
 
         Member savedMember = memberRepository.save(member);
 
-        return new SignUpResponseDto(savedMember.getId(), savedMember.getUsername(), savedMember.getAge());
+        return new SignUpResponseDto(savedMember.getId(), savedMember.getUsername());
     }
 
     // 특정 회원 조회
@@ -40,22 +40,26 @@ public class MemberService {
 
         Member findMember = optionalMember.get();
 
-        return new MemberResponseDto(findMember.getUsername(), findMember.getAge());
+        return new MemberResponseDto(findMember.getUsername());
     }
 
-    /*
-    비밀번호 수정 기능
-    @Transactional로 하나의 트랜잭션 내에서 동작하게끔 만들어줘야 함
+    /* 회원 정보 수정
+    비밀번호 확인 후 회원 정보 수정 기능
+    @Transactional로 하나의 트랜잭션 내에서 동작하게끔 만들어줌
      */
     @Transactional
-    public void updatePassword(Long id, String oldPassword, String newPassword) {
+    public void updateMember(Long id, String password, String newName, String newEmail) {
 
+        // 회원 찾기
         Member findMember = memberRepository.findByIdOrElseThrow(id);
 
-        if (!findMember.getPassword().equals(oldPassword)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
+        // 비밀번호 확인
+        if (!findMember.getPassword().equals(password)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The password is incorrect.");
         }
 
-        findMember.updatePassword(newPassword);
+        // 유저명과 이메일 수정
+        findMember.updateMember(newName, newEmail);
     }
+
 }
