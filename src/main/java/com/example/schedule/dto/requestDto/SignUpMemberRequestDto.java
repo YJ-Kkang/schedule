@@ -3,7 +3,7 @@ package com.example.schedule.dto.requestDto;
 import lombok.Getter;
 
 @Getter
-public class SignUpRequestDto {
+public class SignUpMemberRequestDto {
 
     private final String username;
 
@@ -12,7 +12,7 @@ public class SignUpRequestDto {
     private final String password;
 
 
-    public SignUpRequestDto(String username, String email, String password) {
+    public SignUpMemberRequestDto(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
