@@ -61,13 +61,22 @@ public class MemberController {
             @RequestBody UpdateMemberRequestDto requestDto
     ) {
         memberService.updateMember(
-                id, requestDto.getPassword(),
-                requestDto.getUsername(), requestDto.getEmail()
+                id,
+                requestDto.getPassword(),
+                requestDto.getUsername(),
+                requestDto.getEmail()
         );
 
         return new ResponseEntity<>("Your account information has been updated successfully.", HttpStatus.OK);
     }
 
+    // 특정 회원 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteMember(@PathVariable Long id) {
+        memberService.deleteMember(id);
 
+        return new ResponseEntity<>("The member information has been deleted successfully.", HttpStatus.OK);
+
+    }
 
 }

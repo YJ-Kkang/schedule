@@ -30,7 +30,7 @@ public class MemberService {
 
         Member savedMember = memberRepository.save(member);
 
-        return new SignUpResponseDto(savedMember.getId(), savedMember.getUsername());
+        return new SignUpResponseDto(savedMember.getId(), savedMember.getUsername(), savedMember.getEmail());
     }
 
     // 회원 전체 조회
@@ -75,4 +75,9 @@ public class MemberService {
         findMember.updateMember(newName, newEmail);
     }
 
+    // 특정 회원 삭제
+    public void deleteMember(Long id) {
+        Member findMember = memberRepository.findByIdOrElseThrow(id);
+        memberRepository.delete(findMember);
+    }
 }
