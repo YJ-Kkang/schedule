@@ -8,13 +8,17 @@ import lombok.Setter;
 @Entity
 @Table(name = "board")
 public class Board extends BaseEntity {
+
+    // ID (자동 생성)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 할 일 제목
     @Column(nullable = false)
     private String title;
 
+    // 할 일 내용
     @Column(columnDefinition = "longtext")
     private String contents;
 
@@ -34,6 +38,12 @@ public class Board extends BaseEntity {
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    // 게시글 수정
+    public void updateBoard(String title, String contents) {
+        this.title = title;
+        this.contents = contents;
     }
 
 }

@@ -1,8 +1,9 @@
 package com.example.schedule.controller;
 
+import com.example.schedule.dto.requestDto.CreateBoardRequestDto;
+import com.example.schedule.dto.requestDto.UpdateBoardRequestDto;
 import com.example.schedule.dto.responseDto.BoardResponseDto;
 import com.example.schedule.dto.responseDto.BoardWithIdResponseDto;
-import com.example.schedule.dto.requestDto.CreateBoardRequestDto;
 import com.example.schedule.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -52,10 +53,24 @@ public class BoardController {
     }
 
     /*
-     특정 게시글 수정
+    특정 게시글 수정
     비밀번호 확인 후 게시글 수정 기능
     일부 수정이기에 PatchMapping 사용
      */
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> updateBoard(
+            @PathVariable Long id,
+            @RequestBody UpdateBoardRequestDto UpdateBoardRequestDto
+    ) {
+
+        boardService.updateBoard(
+                id,
+                UpdateBoardRequestDto.getTitle(),
+                UpdateBoardRequestDto.getContents()
+        );
+
+        return new ResponseEntity<>("The board post has been updated successfully.", HttpStatus.OK);
+    }
 
 
 

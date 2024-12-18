@@ -6,11 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    // 특정 게시글 조회
+
+    // 게시글 조회, 수정, 삭제
     default Board findByIdOrElseThrow(Long id) {
         return findById(id)
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND,
                                 "Does not exist id = " + id));
     }
+
 }

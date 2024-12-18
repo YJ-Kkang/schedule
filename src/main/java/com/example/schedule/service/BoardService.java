@@ -8,6 +8,7 @@ import com.example.schedule.repository.BoardRepository;
 import com.example.schedule.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -45,6 +46,21 @@ public class BoardService {
         Member writer = findBoard.getMember();
 
         return new BoardWithIdResponseDto(findBoard.getTitle(), findBoard.getContents());
+    }
+
+    /*
+     특정 게시글 수정
+    비밀번호 확인 후 게시글 수정 기능
+    @Transactional로 하나의 트랜잭션 내에서 동작하게끔 만들어줌
+     */
+    @Transactional
+    public void updateBoard(Long id, String newTitle, String newContents) {
+
+        // 게시글 찾기
+        Board findboard = boardRepository.findByIdOrElseThrow(id);
+
+        // 게시글 수정
+        findboard.updateBoard(newTitle, newContents);
     }
 
     // 특정 게시글 삭제 기능
