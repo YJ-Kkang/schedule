@@ -40,9 +40,8 @@ public class Member extends BaseEntity {
     }
 
     // 회원 정보 수정
-    public void updateMember(String username, String email) {
+    public void updateMember(String username) {
         this.username = username;
-        this.email = email;
     }
 
 }

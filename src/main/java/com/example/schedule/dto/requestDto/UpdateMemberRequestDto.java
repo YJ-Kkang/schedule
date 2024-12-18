@@ -11,12 +11,8 @@ public class UpdateMemberRequestDto {
     // 새로운 유저명
     private final String username;
 
-   // 새로운 이메일
-    private final String email;
-
-    public UpdateMemberRequestDto(String password, String username, String email) {
+    public UpdateMemberRequestDto(String password, String username) {
         this.password = password;
         this.username = username;
-        this.email = email;
     }
 }

@@ -56,7 +56,8 @@ public class MemberService {
         return new MemberResponseDto(findMember.getUsername(), findMember.getEmail());
     }
 
-    /* 회원 정보 수정
+    /*
+    회원 정보 수정
     비밀번호 확인 후 회원 정보 수정 기능
     @Transactional로 하나의 트랜잭션 내에서 동작하게끔 만들어줌
      */
