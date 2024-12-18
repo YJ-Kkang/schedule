@@ -61,7 +61,7 @@ public class MemberService {
     @Transactional로 하나의 트랜잭션 내에서 동작하게끔 만들어줌
      */
     @Transactional
-    public void updateMember(Long id, String password, String newName, String newEmail) {
+    public void updateMember(Long id, String password, String newName) {
 
         // 회원 찾기
         Member findMember = memberRepository.findByIdOrElseThrow(id);
@@ -71,8 +71,8 @@ public class MemberService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The password is incorrect.");
         }
 
-        // 유저명과 이메일 수정
-        findMember.updateMember(newName, newEmail);
+        // 유저명 수정
+        findMember.updateMember(newName);
     }
 
     // 특정 회원 삭제

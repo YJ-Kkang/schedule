@@ -18,10 +18,10 @@ public class BoardService {
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
 
-    // 게시글 생성
-    public BoardResponseDto save(String title, String contents, String username) {
+    // 게시글 생성 (메서드 호출할 때 매개변수 순서 주의해서 넣기)
+    public BoardResponseDto save(String username, String title, String contents) {
 
-        Member findMember = memberRepository.findByUsernameOrElseThrow(username);
+        Member findMember = memberRepository.findMemberByUsernameOrElseThrow(username);
 
         Board board = new Board(title, contents);
         board.setMember(findMember);

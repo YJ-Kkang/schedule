@@ -51,6 +51,14 @@ public class BoardController {
         return new ResponseEntity<>(boardWithAgeResponseDto, HttpStatus.OK);
     }
 
+    /*
+     특정 게시글 수정
+    비밀번호 확인 후 게시글 수정 기능
+    일부 수정이기에 PatchMapping 사용
+     */
+
+
+
     // 특정 게시글 삭제 기능
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
