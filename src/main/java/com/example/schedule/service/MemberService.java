@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,7 +19,11 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    // 회원 생성
+    /* 회원 생성
+    유저명: username
+    이메일: email
+    비밀번호: password
+     */
     public SignUpResponseDto signUp(String username, String email, String password) {
 
         Member member = new Member(username, email, password);
@@ -26,6 +31,14 @@ public class MemberService {
         Member savedMember = memberRepository.save(member);
 
         return new SignUpResponseDto(savedMember.getId(), savedMember.getUsername());
+    }
+
+    // 회원 전체 조회
+    public List<MemberResponseDto> findAll() {
+        return memberRepository.findAll()
+                .stream()
+                .map(MemberResponseDto::toDto)
+                .toList();
     }
 
     // 특정 회원 조회
@@ -40,7 +53,7 @@ public class MemberService {
 
         Member findMember = optionalMember.get();
 
-        return new MemberResponseDto(findMember.getUsername());
+        return new MemberResponseDto(findMember.getUsername(), findMember.getEmail());
     }
 
     /* 회원 정보 수정

@@ -1,14 +1,16 @@
 package com.example.schedule.controller;
 
-import com.example.schedule.dto.responseDto.MemberResponseDto;
 import com.example.schedule.dto.requestDto.SignUpRequestDto;
-import com.example.schedule.dto.responseDto.SignUpResponseDto;
 import com.example.schedule.dto.requestDto.UpdateMemberRequestDto;
+import com.example.schedule.dto.responseDto.MemberResponseDto;
+import com.example.schedule.dto.responseDto.SignUpResponseDto;
 import com.example.schedule.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/members")
@@ -29,6 +31,15 @@ public class MemberController {
                 );
 
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
+    }
+
+    // 회원 전체 조회
+    @GetMapping
+    public ResponseEntity<List<MemberResponseDto>> findAll() {
+
+        List<MemberResponseDto> memberResponseDto = memberService.findAll();
+
+        return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
 
     // 특정 회원 조회
