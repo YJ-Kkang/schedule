@@ -194,7 +194,7 @@ erDiagram
    "username": "새로운 사용자 이름"
    }
 ```
-### Error Response Code (Members)
+### \- Error Response Code (Members)
 | HTTP Status | Description              | Message Example                                                      |
 |-------------|--------------------------|----------------------------------------------------------------------|
 | 401         | Unauthorized             | "The password is incorrect."                                         |
@@ -202,7 +202,7 @@ erDiagram
 | 500         | Internal Server Error    | "Internal Server Error occurred"                                     |
 
 
-### Request Body Description
+### \- Request Body Description
 #### Field Information (Members)
 | Field Name  | Data Type  | Mandatory Status | Description                                                                                                         |
 |-------------|------------|------------------|---------------------------------------------------------------------------------------------------------------------|
@@ -251,14 +251,14 @@ erDiagram
    }
 ```
 
-### Error Response Code (Boards)
+### \- Error Response Code (Boards)
 | HTTP Status | Description              | Message Example                    |
 |-------------|--------------------------|------------------------------------|
 | 404         | Not Found                | "Does not exist id = {id}"         |
 | 500         | Internal Server Error    | "Internal Server Error occurred"   |
 
 
-### Request Body Description
+### \- Request Body Description
 #### Field Information (Boards)
 | Field Name  | Data Type  | Mandatory Status | Description                                                                                                       |
 |-------------|------------|------------------|-------------------------------------------------------------------------------------------------------------------|
