@@ -1,7 +1,7 @@
 package com.example.schedule.service;
 
 import com.example.schedule.dto.responseDto.MemberResponseDto;
-import com.example.schedule.dto.responseDto.SignUpResponseDto;
+import com.example.schedule.dto.responseDto.SignUpMemberResponseDto;
 import com.example.schedule.entity.Member;
 import com.example.schedule.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +24,13 @@ public class MemberService {
     이메일: email
     비밀번호: password
      */
-    public SignUpResponseDto signUp(String username, String email, String password) {
+    public SignUpMemberResponseDto signUp(String username, String email, String password) {
 
         Member member = new Member(username, email, password);
 
         Member savedMember = memberRepository.save(member);
 
-        return new SignUpResponseDto(savedMember.getId(), savedMember.getUsername(), savedMember.getEmail());
+        return new SignUpMemberResponseDto(savedMember.getId(), savedMember.getUsername(), savedMember.getEmail());
     }
 
     // 회원 전체 조회

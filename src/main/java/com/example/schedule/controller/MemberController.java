@@ -1,9 +1,9 @@
 package com.example.schedule.controller;
 
-import com.example.schedule.dto.requestDto.SignUpRequestDto;
+import com.example.schedule.dto.requestDto.SignUpMemberRequestDto;
 import com.example.schedule.dto.requestDto.UpdateMemberRequestDto;
 import com.example.schedule.dto.responseDto.MemberResponseDto;
-import com.example.schedule.dto.responseDto.SignUpResponseDto;
+import com.example.schedule.dto.responseDto.SignUpMemberResponseDto;
 import com.example.schedule.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,9 @@ public class MemberController {
 
     // 회원 생성
     @PostMapping("/signup")
-    public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto requestDto) {
+    public ResponseEntity<SignUpMemberResponseDto> signUp(@RequestBody SignUpMemberRequestDto requestDto) {
 
-        SignUpResponseDto signUpResponseDto =
+        SignUpMemberResponseDto signUpResponseDto =
                 memberService.signUp(
                         requestDto.getUsername(),
                         requestDto.getEmail(),
@@ -63,8 +63,7 @@ public class MemberController {
         memberService.updateMember(
                 id,
                 requestDto.getPassword(),
-                requestDto.getUsername(),
-                requestDto.getEmail()
+                requestDto.getUsername()
         );
 
         return new ResponseEntity<>("Your account information has been updated successfully.", HttpStatus.OK);
