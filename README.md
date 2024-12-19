@@ -160,6 +160,112 @@ erDiagram
     MEMBER ||--o{ BOARD : "member_id:id"
 ```
 
+### 📌 API 명세서
+>① 회원
+### \- Basic Information
+- Base URL: /members
+- Response Format: JSON
+- Character Encoding: UTF-8
+
+### \- API List
+| Method | URI             | Description            | Request Body              | Response Code |
+|--------|-----------------|------------------------|---------------------------|---------------|
+| POST   | /members/signup | Create member          | username, email, password | 201           |
+| GET    | /members        | Read all members       | -                         | 200           |
+| GET    | /members/{id}   | Read specific members  | -                         | 200           |
+| PATCH  | /members/{id}   | Update member          | password, username        | 200           |
+| DELETE | /members/{id}   | Delete member          | -                         | 200           |
+
+### \- API Details
+#### Request Body Details
+1. `POST` Create Member
+```json
+   {
+   "username": "사용자 이름",
+   "email": "이메일 주소",
+   "password": "비밀번호"
+   }
+```
+
+2. `PATCH` Update Member
+```json
+   {
+   "password": "현재 비밀번호",
+   "username": "새로운 사용자 이름"
+   }
+```
+### Error Response Code (Members)
+| HTTP Status | Description              | Message Example                                                      |
+|-------------|--------------------------|----------------------------------------------------------------------|
+| 401         | Unauthorized             | "The password is incorrect."                                         |
+| 404         | Not Found                | "Does not exist id = {id}" or "Does not exist username = {username}" |
+| 500         | Internal Server Error    | "Internal Server Error occurred"                                     |
+
+
+### Request Body Description
+#### Field Information (Members)
+| Field Name  | Data Type  | Mandatory Status | Description                                                                                                         |
+|-------------|------------|------------------|---------------------------------------------------------------------------------------------------------------------|
+| id          | Long       | Optional         | Identifier for each member  <br/> Needed for **GET**, **PATCH**, or **DELETE** requests to manage a specific member |
+| username    | String     | Mandatory        | User's name <br/> must be less than 4 characters                                                                    |
+| email       | String     | Mandatory        | User's email address                                                                                                |
+| password    | String     | Mandatory        | User's password                                                                                                     |
+
+
+
+<br>
+
+>② 일정(게시글)
+### \- Basic Information
+- Base URL: /boards
+- Response Format: JSON
+- Character Encoding: UTF-8
+
+### \- API List
+| Method | URI          | Description        | Request Body              | Response Code |
+|--------|--------------|--------------------|---------------------------|---------------|
+| POST   | /boards      | Create plan        | username, title, contents | 201           |
+| GET    | /boards      | Read all plans     | -                         | 200           |
+| GET    | /boards/{id} | Read specific plan | -                         | 200           |
+| PATCH  | /boards/{id} | Update plan        | title, contents           | 200           |
+| DELETE | /boards/{id} | Delete plan        | -                         | 200           |
+
+
+### \- API Details
+#### Request Body Details
+
+1. `POST` Create Plan
+```json
+   {
+   "username": "작성자 이름",
+   "title": "일정 제목",
+   "contents": "일정 내용"
+   }
+```
+
+2. `PATCH` Update Plan
+```json
+   {
+   "title": "새로운 일정 제목",
+   "contents": "새로운 일정 내용"
+   }
+```
+
+### Error Response Code (Boards)
+| HTTP Status | Description              | Message Example                    |
+|-------------|--------------------------|------------------------------------|
+| 404         | Not Found                | "Does not exist id = {id}"         |
+| 500         | Internal Server Error    | "Internal Server Error occurred"   |
+
+
+### Request Body Description
+#### Field Information (Boards)
+| Field Name  | Data Type  | Mandatory Status | Description                                                                                                       |
+|-------------|------------|------------------|-------------------------------------------------------------------------------------------------------------------|
+| id          | Long       | Optional         | Identifier for each board  <br/> Needed for **GET**, **PATCH**, or **DELETE** requests to manage a specific board |
+| username    | String     | Mandatory        | User's name <br/> must be less than 4 characters                                                                  |
+| title       | String     | Mandatory        | Title of the board <br/> must be less than 10 characters                                                          |
+| contents    | String     | Optional         | Detailed description of the board  <br/> Should be an empty String(`""`) when the value is null                   |
 
 
 <br>
