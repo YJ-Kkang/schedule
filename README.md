@@ -207,7 +207,7 @@ erDiagram
 | Field Name  | Data Type  | Mandatory Status | Description                                                                                                         |
 |-------------|------------|------------------|---------------------------------------------------------------------------------------------------------------------|
 | id          | Long       | Optional         | Identifier for each member  <br/> Needed for **GET**, **PATCH**, or **DELETE** requests to manage a specific member |
-| username    | String     | Mandatory        | User's name <br/> must be less than 4 characters                                                                    |
+| username    | String     | Mandatory        | User's name                                                                                                         |
 | email       | String     | Mandatory        | User's email address                                                                                                |
 | password    | String     | Mandatory        | User's password                                                                                                     |
 
@@ -263,8 +263,8 @@ erDiagram
 | Field Name  | Data Type  | Mandatory Status | Description                                                                                                       |
 |-------------|------------|------------------|-------------------------------------------------------------------------------------------------------------------|
 | id          | Long       | Optional         | Identifier for each board  <br/> Needed for **GET**, **PATCH**, or **DELETE** requests to manage a specific board |
-| username    | String     | Mandatory        | User's name <br/> must be less than 4 characters                                                                  |
-| title       | String     | Mandatory        | Title of the board <br/> must be less than 10 characters                                                          |
+| username    | String     | Mandatory        | User's name                                                                                                       |
+| title       | String     | Mandatory        | Title of the board                                                                                                |
 | contents    | String     | Optional         | Detailed description of the board  <br/> Should be an empty String(`""`) when the value is null                   |
 
 
