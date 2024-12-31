@@ -1,10 +1,14 @@
 package com.example.schedule.controller;
 
+import com.example.schedule.dto.requestDto.LoginMemberRequestDto;
 import com.example.schedule.dto.requestDto.SignUpMemberRequestDto;
 import com.example.schedule.dto.requestDto.UpdateMemberRequestDto;
+import com.example.schedule.dto.responseDto.LoginMemberResponseDto;
 import com.example.schedule.dto.responseDto.MemberResponseDto;
 import com.example.schedule.dto.responseDto.SignUpMemberResponseDto;
 import com.example.schedule.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +23,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    // 회원 생성
+    // 회원 생성(회원 가입)
     @PostMapping("/signup")
     public ResponseEntity<SignUpMemberResponseDto> signUp(@RequestBody SignUpMemberRequestDto requestDto) {
 
@@ -31,6 +35,31 @@ public class MemberController {
                 );
 
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
+    }
+
+    // 로그인
+    @PostMapping("/login")
+    public ResponseEntity<String> login(
+            @RequestBody LoginMemberRequestDto requestDto,
+            HttpServletRequest request
+    ) {
+        LoginMemberResponseDto responseDto =
+                memberService.signIn(
+                        requestDto.getEmail(),
+                        requestDto.getPassword()
+                );
+
+        // id 찾아옴
+        Long id = responseDto.getId();
+        // 세션 만듦
+        HttpSession session = request.getSession();
+
+        MemberResponseDto dto = memberService.findById(id);
+
+        // 세션 객체에 저장(사용자의 정보를 저장)
+        session.setAttribute("member", dto);
+
+        return new ResponseEntity<>("Sign in successfully.", HttpStatus.OK);
     }
 
     // 회원 전체 조회

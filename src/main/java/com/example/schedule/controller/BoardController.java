@@ -24,6 +24,9 @@ public class BoardController {
     @PostMapping
     public ResponseEntity<BoardResponseDto> save(@RequestBody CreateBoardRequestDto requestDto) {
 
+        // todo 로그인 여부 확인 로직
+
+        // 생성 로직
         BoardResponseDto boardResponseDto =
                 boardService.save(
                         requestDto.getUsername(),
@@ -63,6 +66,9 @@ public class BoardController {
             @RequestBody UpdateBoardRequestDto UpdateBoardRequestDto
     ) {
 
+        // todo 로그인 여부 확인 로직
+
+        // 수정 로직
         boardService.updateBoard(
                 id,
                 UpdateBoardRequestDto.getTitle(),
@@ -78,6 +84,9 @@ public class BoardController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
 
+        // todo 로그인 여부 확인 로직
+
+        // 삭제 로직
         boardService.delete(id);
 
         return new ResponseEntity<>(HttpStatus.OK);

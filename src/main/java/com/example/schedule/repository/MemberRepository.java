@@ -33,5 +33,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
                 );
     }
 
+    // 이메일로 찾기
+    Member findByEmail(String email);
 
 }

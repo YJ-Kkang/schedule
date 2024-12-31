@@ -1,5 +1,6 @@
 package com.example.schedule.service;
 
+import com.example.schedule.dto.responseDto.LoginMemberResponseDto;
 import com.example.schedule.dto.responseDto.MemberResponseDto;
 import com.example.schedule.dto.responseDto.SignUpMemberResponseDto;
 import com.example.schedule.entity.Member;
@@ -33,6 +34,13 @@ public class MemberService {
         return new SignUpMemberResponseDto(savedMember.getId(), savedMember.getUsername(), savedMember.getEmail());
     }
 
+    // 로그인
+    public LoginMemberResponseDto signIn(String email, String password) {
+        Member member = memberRepository.findByEmail(email);
+
+        return new LoginMemberResponseDto(member.getId());
+    }
+
     // 회원 전체 조회
     public List<MemberResponseDto> findAll() {
         return memberRepository.findAll()
@@ -51,9 +59,13 @@ public class MemberService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
         }
 
-        Member findMember = optionalMember.get();
+        Member member = optionalMember.get();
 
-        return new MemberResponseDto(findMember.getUsername(), findMember.getEmail());
+        return new MemberResponseDto(
+                member.getId(),
+                member.getUsername(),
+                member.getEmail()
+        );
     }
 
     /*
