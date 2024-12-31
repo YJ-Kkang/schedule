@@ -36,7 +36,21 @@ public class MemberService {
 
     // 로그인
     public LoginMemberResponseDto signIn(String email, String password) {
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email does not match"));
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(
+                                HttpStatus.UNAUTHORIZED
+                                , "Email does not match"
+                        )
+                );
+        // isPasswordDifferent가 참일 때(패스워드가 다를 때) if문이 실행됨
+        boolean isPasswordDifferent = !member.getPassword().equals(password);
+
+        if(isPasswordDifferent) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED
+                    , "Password does not match"
+            );
+        }
 
         return new LoginMemberResponseDto(member.getId());
     }
