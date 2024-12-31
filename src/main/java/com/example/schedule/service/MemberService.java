@@ -36,7 +36,7 @@ public class MemberService {
 
     // 로그인
     public LoginMemberResponseDto signIn(String email, String password) {
-        Member member = memberRepository.findByEmail(email);
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email does not match"));
 
         return new LoginMemberResponseDto(member.getId());
     }
