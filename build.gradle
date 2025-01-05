@@ -25,7 +25,10 @@ repositories {
 
 dependencies {
 	//포스트맨 대체
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+//	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+	// Bean Validation 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
