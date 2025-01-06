@@ -5,7 +5,6 @@ import com.example.schedule.domain.board.dto.requestDto.UpdateBoardRequestDto;
 import com.example.schedule.domain.board.dto.responseDto.BoardResponseDto;
 import com.example.schedule.domain.board.dto.responseDto.BoardWithIdResponseDto;
 import com.example.schedule.domain.board.service.BoardService;
-import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,12 +29,10 @@ public class BoardController {
     // 게시글 생성
     @PostMapping
     public ResponseEntity<BoardResponseDto> save(
-        @Valid @RequestBody CreateBoardRequestDto requestDto
+        @RequestBody CreateBoardRequestDto requestDto
     ) {
-
-        // todo 로그인 여부 확인 로직
-
-        // 생성 로직
+        
+        // 게시글 생성 로직
         BoardResponseDto boardResponseDto =
                 boardService.save(
                         requestDto.getUsername(),
@@ -74,10 +71,8 @@ public class BoardController {
     @PatchMapping("/{id}")
     public ResponseEntity<String> updateBoard(
             @PathVariable Long id,
-            @Valid @RequestBody UpdateBoardRequestDto UpdateBoardRequestDto
+            @RequestBody UpdateBoardRequestDto UpdateBoardRequestDto
     ) {
-
-        // todo 로그인 여부 확인 로직
 
         // 수정 로직
         boardService.updateBoard(
@@ -86,7 +81,7 @@ public class BoardController {
                 UpdateBoardRequestDto.getContents()
         );
 
-        return new ResponseEntity<>("The board post has been updated successfully.", HttpStatus.OK);
+        return new ResponseEntity<>("게시글 수정 완료", HttpStatus.OK);
     }
 
 
@@ -96,8 +91,6 @@ public class BoardController {
     public ResponseEntity<Void> delete(
         @PathVariable Long id
     ) {
-
-        // todo 로그인 여부 확인 로직
 
         // 삭제 로직
         boardService.delete(id);

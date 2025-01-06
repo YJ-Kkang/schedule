@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,9 +24,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
-@RequestMapping("/members")
 @RequiredArgsConstructor
+@RequestMapping("/members")
 public class MemberController {
 
     private final MemberService memberService;
@@ -35,7 +37,7 @@ public class MemberController {
     public ResponseEntity<SignUpMemberResponseDto> signUp(
         @Valid @RequestBody SignUpMemberRequestDto requestDto
     ) {
-
+        log.info("회원가입 사인업 전");
         SignUpMemberResponseDto signUpResponseDto =
                 memberService.signUp(
                         requestDto.getUsername(),
@@ -45,7 +47,7 @@ public class MemberController {
 
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
     }
-        
+
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<String> login(
@@ -68,7 +70,7 @@ public class MemberController {
         // 세션 객체에 저장(사용자의 정보를 저장)
         session.setAttribute("member", dto);
 
-        return new ResponseEntity<>("Sign in successfully.", HttpStatus.OK);
+        return new ResponseEntity<>("로그인 성공.", HttpStatus.OK);
     }
 
     // 회원 전체 조회
@@ -85,7 +87,6 @@ public class MemberController {
     public ResponseEntity<MemberResponseDto> findById(
         @PathVariable Long id
     ) {
-
         MemberResponseDto memberResponseDto = memberService.findById(id);
 
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
@@ -106,7 +107,7 @@ public class MemberController {
                 requestDto.getUsername()
         );
 
-        return new ResponseEntity<>("Your account information has been updated successfully.", HttpStatus.OK);
+        return new ResponseEntity<>("회원 정보가 수정되었습니다.", HttpStatus.OK);
     }
 
     // 특정 회원 삭제
@@ -116,7 +117,7 @@ public class MemberController {
     ) {
         memberService.deleteMember(id);
 
-        return new ResponseEntity<>("The member information has been deleted successfully.", HttpStatus.OK);
+        return new ResponseEntity<>("회원 삭제가 완료되었습니다.", HttpStatus.OK);
 
     }
 

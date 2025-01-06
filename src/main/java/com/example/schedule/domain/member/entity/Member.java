@@ -21,7 +21,7 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private String username;
 
-    // 이메일
+    // 이메일 / unique = true: 중복값 금지
     @Column(nullable = false, unique = true)
     private String email;
 

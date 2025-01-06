@@ -3,6 +3,7 @@ package com.example.schedule.domain.board.service;
 import com.example.schedule.domain.board.dto.responseDto.BoardResponseDto;
 import com.example.schedule.domain.board.dto.responseDto.BoardWithIdResponseDto;
 import com.example.schedule.domain.board.entity.Board;
+import com.example.schedule.domain.common.exception.NotFoundException;
 import com.example.schedule.domain.member.entity.Member;
 import com.example.schedule.domain.board.repository.BoardRepository;
 import com.example.schedule.domain.member.repository.MemberRepository;
@@ -25,7 +26,7 @@ public class BoardService {
         Member findMember = memberRepository.findMemberByUsernameOrElseThrow(username);
 
         Board board = new Board(title, contents);
-        board.setMember(findMember); //todo 세터는 사용하지 않는 방향으로 수정(메서드 직접 만들어 쓰기)
+        board.setMember(findMember);
 
         boardRepository.save(board);
 
@@ -42,7 +43,9 @@ public class BoardService {
 
     // 특정 게시글 조회
     public BoardWithIdResponseDto findById(Long id) {
-        Board findBoard = boardRepository.findByIdOrElseThrow(id);
+        Board findBoard = boardRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("존재하지 않는 id입니다: " + id)
+            );
 
         return new BoardWithIdResponseDto(findBoard.getTitle(), findBoard.getContents());
     }
@@ -56,7 +59,9 @@ public class BoardService {
     public void updateBoard(Long id, String newTitle, String newContents) {
 
         // 게시글 찾기
-        Board findboard = boardRepository.findByIdOrElseThrow(id);
+        Board findboard = boardRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("존재하지 않는 id입니다: " + id)
+            );
 
         // 게시글 수정
         findboard.updateBoard(newTitle, newContents);
@@ -65,7 +70,9 @@ public class BoardService {
     // 특정 게시글 삭제 기능
     public void delete(Long id) {
 
-        Board findBoard = boardRepository.findByIdOrElseThrow(id);
+        Board findBoard = boardRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("존재하지 않는 id입니다: " + id)
+            );
 
         boardRepository.delete(findBoard);
     }

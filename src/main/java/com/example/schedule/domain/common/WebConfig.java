@@ -1,6 +1,5 @@
 package com.example.schedule.domain.common;
 
-import com.example.schedule.domain.common.filter.ExceptionCheckFilter;
 import com.example.schedule.domain.common.filter.LoginFilter;
 import jakarta.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -20,15 +19,5 @@ public class WebConfig implements WebMvcConfigurer {
         filterRegistrationBean.addUrlPatterns("/*");
 
         return filterRegistrationBean;
-    }
-
-    // ExceptionCheckFilter 빈에 등록 (todo 이 부분 아직 안고침)
-    @Bean
-    FilterRegistrationBean<Filter> addFilter() {
-        FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
-        filterFilterRegistrationBean.setFilter(new ExceptionCheckFilter());
-        filterFilterRegistrationBean.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.ERROR);
-        filterFilterRegistrationBean.addUrlPatterns("/*");
-        return filterFilterRegistrationBean;
     }
 }

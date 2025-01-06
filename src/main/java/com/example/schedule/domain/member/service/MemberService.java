@@ -1,5 +1,6 @@
 package com.example.schedule.domain.member.service;
 
+import com.example.schedule.domain.common.exception.NotFoundException;
 import com.example.schedule.domain.member.dto.responseDto.LoginMemberResponseDto;
 import com.example.schedule.domain.member.dto.responseDto.MemberResponseDto;
 import com.example.schedule.domain.member.dto.responseDto.SignUpMemberResponseDto;
@@ -8,10 +9,8 @@ import com.example.schedule.domain.member.repository.MemberRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +25,8 @@ public class MemberService {
      */
     public SignUpMemberResponseDto signUp(String username, String email, String password) {
 
+        // todo 같은 이메일 가입 막는 예외 추가
+
         Member member = new Member(username, email, password);
 
         Member savedMember = memberRepository.save(member);
@@ -36,19 +37,13 @@ public class MemberService {
     // 로그인
     public LoginMemberResponseDto signIn(String email, String password) {
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new ResponseStatusException(
-                                HttpStatus.UNAUTHORIZED
-                                , "Email does not match"
-                        )
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 이메일입니다.")
                 );
         // isPasswordDifferent가 참일 때(패스워드가 다를 때) if문이 실행됨
         boolean isPasswordDifferent = !member.getPassword().equals(password);
 
         if(isPasswordDifferent) {
-            throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED
-                    , "Password does not match"
-            );
+            throw new NotFoundException("존재하지 않는 비밀번호입니다.");
         }
 
         return new LoginMemberResponseDto(member.getId());
@@ -69,7 +64,7 @@ public class MemberService {
 
         // NPE 방지
         if (optionalMember.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+            throw new NotFoundException("존재하지 않는 id입니다: " + id);
         }
 
         Member member = optionalMember.get();
@@ -94,7 +89,7 @@ public class MemberService {
 
         // 비밀번호 확인
         if (!findMember.getPassword().equals(password)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The password is incorrect.");
+            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
 
         // 유저명 수정
